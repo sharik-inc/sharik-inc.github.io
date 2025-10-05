@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game — SAS</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #111827, #1e3a8a, #6d28d9);
+      background-size: 300% 300%;
+      animation: gradientMove 10s ease infinite;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      animation: fadeInDown 1.5s ease;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #game-board {
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      display: grid;
+      grid-template-columns: repeat(20, 20px);
+      grid-template-rows: repeat(20, 20px);
+      gap: 2px;
+      padding: 10px;
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .cell {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: background-color 0.1s ease;
+    }
+
+    .snake {
+      background: linear-gradient(90deg, #10b981, #22d3ee);
+      box-shadow: 0 0 10px rgba(16,185,129,0.6);
+    }
+
+    .food {
+      background: linear-gradient(90deg, #f43f5e, #f59e0b);
+      box-shadow: 0 0 10px rgba(244,63,94,0.6);
+    }
+
+    #score {
+      margin-top: 20px;
+      font-size: 20px;
+      opacity: 0.8;
+      animation: fadeIn 2s ease;
+    }
+
+    .back {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+
+    .back:hover {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="back"><i class="ri-arrow-left-line"></i></a>
+  <h1>🐍 SAS Snake</h1>
+  <div id="game-board"></div>
+  <div id="score">Очки: 0</div>
+
+  <script>
+    const board = document.getElementById('game-board');
+    const scoreDisplay = document.getElementById('score');
+    const size = 20;
+    const cells = [];
+    let snake = [{x: 10, y: 10}];
+    let direction = {x: 0, y: 0};
+    let food = {x: 5, y: 5};
+    let score = 0;
+    let gameOver = false;
+
+    // Создание поля
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        board.appendChild(cell);
+        cells.push(cell);
+      }
+    }
+
+    function draw() {
+      cells.forEach(cell => cell.className = 'cell');
+      snake.forEach(segment => {
+        const index = segment.y * size + segment.x;
+        if (cells[index]) cells[index].classList.add('snake');
+      });
+      const foodIndex = food.y * size + food.x;
+      cells[foodIndex].classList.add('food');
+    }
+
+    function move() {
+      if (gameOver) return;
+      const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+      // Проверка на выход за границы
+      if (head.x < 0 || head.y < 0 || head.x >= size || head.y >= size || snake.some(s => s.x === head.x && s.y === head.y)) {
+        gameOver = true;
+        scoreDisplay.innerHTML = `💀 Игра окончена! Очки: ${score}`;
+        return;
+      }
+      snake.unshift(head);
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        scoreDisplay.innerHTML = `Очки: ${score}`;
+        food = {x: Math.floor(Math.random() * size), y: Math.floor(Math.random() * size)};
+      } else {
+        snake.pop();
+      }
+      draw();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowUp' && direction.y === 0) direction = {x: 0, y: -1};
+      if (e.key === 'ArrowDown' && direction.y === 0) direction = {x: 0, y: 1};
+      if (e.key === 'ArrowLeft' && direction.x === 0) direction = {x: -1, y: 0};
+      if (e.key === 'ArrowRight' && direction.x === 0) direction = {x: 1, y: 0};
+    });
+
+    setInterval(move, 150);
+    draw();
+  </script>
+</body>
+</html>
