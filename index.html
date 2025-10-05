@@ -13,9 +13,9 @@
       height: 100vh;
       overflow: hidden;
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(135deg, #4c1d95, #7e22ce, #db2777);
       background-size: 300% 300%;
       animation: gradientMove 10s ease infinite;
@@ -43,20 +43,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .desc {
-      max-width: 600px;
-      font-size: 18px;
-      line-height: 1.6;
-      opacity: 0.95;
-      margin-bottom: 40px;
-      animation: fadeIn 2s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     .icons {
       font-size: 48px;
       margin-bottom: 30px;
@@ -75,7 +61,22 @@
       color: #fbbf24;
     }
 
-    button {
+    .desc {
+      max-width: 600px;
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.95;
+      margin-bottom: 40px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .btn {
+      display: inline-block;
       font-size: 22px;
       padding: 18px 50px;
       border: none;
@@ -86,9 +87,10 @@
       cursor: pointer;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin: 10px;
     }
 
-    button:hover {
+    .btn:hover {
       transform: scale(1.08);
       box-shadow: 0 15px 40px rgba(255, 182, 193, 0.5);
     }
@@ -101,7 +103,6 @@
       animation: fadeIn 2s ease;
     }
 
-    /* Floating background circles */
     .circle {
       position: absolute;
       border-radius: 50%;
@@ -136,7 +137,7 @@
     @media (max-width: 600px) {
       h1 { font-size: 42px; }
       .desc { font-size: 16px; padding: 0 20px; }
-      button { font-size: 18px; padding: 14px 36px; }
+      .btn { font-size: 18px; padding: 14px 36px; }
       .icons { font-size: 38px; gap: 20px; }
     }
   </style>
@@ -158,8 +159,16 @@
     Но <b>SVD</b> в подарок идёт с <b>MinMode</b> — мини-версией оружия 🎯
   </div>
 
-  <button onclick="window.location.href='https://funpay.com/lots/offer?id=54054894'">
-    Купить
+  <!-- Основная кнопка покупки -->
+  <button class="btn" onclick="window.location.href='https://funpay.com/lots/offer?id=54054894'">Купить</button>
+
+  <!-- Новые кнопки -->
+  <button class="btn" onclick="window.location.href='https://funpay.com/lots/offer?id=54053673'">
+    Ваш Некстбот
+  </button>
+
+  <button class="btn" onclick="window.location.href='https://funpay.com/lots/offer?id=54053383'">
+    Декомпиляция Карты .BSP ⇨ .VMF + Обход Защиты
   </button>
 
   <div class="footer">💎 Платный до <b>15.10.2025</b></div>
