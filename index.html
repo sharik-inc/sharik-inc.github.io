@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sharik Reskin</title>
+  <title>Sharik Shop</title>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
@@ -11,17 +11,18 @@
     body {
       margin: 0;
       height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       background: linear-gradient(135deg, #4c1d95, #7e22ce, #db2777);
       background-size: 300% 300%;
       animation: gradientMove 10s ease infinite;
       font-family: 'Poppins', sans-serif;
       color: white;
       text-align: center;
+      padding-top: 60px;
     }
 
     @keyframes gradientMove {
@@ -34,31 +35,8 @@
       font-size: 64px;
       font-weight: 800;
       text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       animation: fadeInUp 1.5s ease;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .icons {
-      font-size: 48px;
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      animation: fadeIn 2s ease forwards;
-    }
-
-    .icons i {
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-
-    .icons i:hover {
-      transform: scale(1.2);
-      color: #fbbf24;
     }
 
     .desc {
@@ -66,8 +44,13 @@
       font-size: 18px;
       line-height: 1.6;
       opacity: 0.95;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
       animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeIn {
@@ -75,19 +58,63 @@
       to { opacity: 1; }
     }
 
+    .shop {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      width: 90%;
+      max-width: 950px;
+      margin-bottom: 80px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 25px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 20px 50px rgba(255,255,255,0.2);
+    }
+
+    .card i {
+      font-size: 60px;
+      margin-bottom: 15px;
+      color: #fbbf24;
+      text-shadow: 0 0 15px rgba(255,255,255,0.4);
+    }
+
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 25px;
+      min-height: 60px;
+    }
+
     .btn {
       display: inline-block;
-      font-size: 22px;
-      padding: 18px 50px;
+      font-size: 18px;
+      padding: 14px 36px;
       border: none;
       border-radius: 50px;
       background: linear-gradient(90deg, #ec4899, #fbbf24);
       color: white;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      margin: 10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
     .btn:hover {
@@ -96,11 +123,10 @@
     }
 
     .footer {
-      position: absolute;
-      bottom: 20px;
       font-size: 16px;
       opacity: 0.8;
       animation: fadeIn 2s ease;
+      margin-bottom: 20px;
     }
 
     .circle {
@@ -137,8 +163,8 @@
     @media (max-width: 600px) {
       h1 { font-size: 42px; }
       .desc { font-size: 16px; padding: 0 20px; }
-      .btn { font-size: 18px; padding: 14px 36px; }
-      .icons { font-size: 38px; gap: 20px; }
+      .card h2 { font-size: 20px; }
+      .btn { font-size: 16px; padding: 12px 28px; }
     }
   </style>
 </head>
@@ -146,32 +172,39 @@
   <div class="circle circle1"></div>
   <div class="circle circle2"></div>
 
-  <h1>Sharik Reskin</h1>
-
-  <div class="icons">
-    <i class="ri-gun-line"></i>
-    <i class="ri-fire-line"></i>
-    <i class="ri-star-smile-line"></i>
-  </div>
-
+  <h1>Sharik Shop</h1>
   <div class="desc">
-    Рескин имеет в себе красивую текстурку на оружия <b>Double Barrel Shotgun</b> и <b>SVD Dragunov</b>.<br>
-    Но <b>SVD</b> в подарок идёт с <b>MinMode</b> — мини-версией оружия 🎯
+    🌟 Добро пожаловать в магазин кастомных услуг Sharik Inc.<br>
+    Здесь вы можете приобрести уникальные проекты и рескины!
   </div>
 
-  <!-- Основная кнопка покупки -->
-  <button class="btn" onclick="window.location.href='https://funpay.com/lots/offer?id=54054894'">Купить</button>
+  <div class="shop">
+    <div class="card" onclick="window.location.href='https://funpay.com/lots/offer?id=54054894'">
+      <i class="ri-paint-brush-line"></i>
+      <h2>Приобрести Reskin</h2>
+      <p>Красивые текстурки для Double Barrel Shotgun и SVD Dragunov.<br>
+      На данный момент доступен только один готовый рескин 🎨</p>
+      <button class="btn">Купить</button>
+    </div>
 
-  <!-- Новые кнопки -->
-  <button class="btn" onclick="window.location.href='https://funpay.com/lots/offer?id=54053673'">
-    Ваш Некстбот
-  </button>
+    <div class="card" onclick="window.location.href='https://funpay.com/lots/offer?id=54053673'">
+      <i class="ri-robot-line"></i>
+      <h2>Приобрести Custom Nextbot</h2>
+      <p>Включает в себя <b>только</b> вашу картинку и звук.<br>
+      Изменение поведения не входит в услугу 🤖</p>
+      <button class="btn">Купить</button>
+    </div>
 
-  <button class="btn" onclick="window.location.href='https://funpay.com/lots/offer?id=54053383'">
-    Декомпиляция Карты .BSP ⇨ .VMF + Обход Защиты
-  </button>
+    <div class="card" onclick="window.location.href='https://funpay.com/lots/offer?id=54053383'">
+      <i class="ri-map-line"></i>
+      <h2>Приобрести Декомпиляцию Карты</h2>
+      <p>Декомпиляция .BSP ⇨ .VMF + обход защиты.<br>
+      Добавление новых элементов не поддерживается 🧩</p>
+      <button class="btn">Купить</button>
+    </div>
+  </div>
 
-  <div class="footer">💎 Платный до <b>15.10.2025</b></div>
+  <div class="footer">💎 DarkRP Reskin платный до <b>15.10.25</b></div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
