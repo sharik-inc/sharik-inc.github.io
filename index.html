@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sharik Reskin</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
 
@@ -14,11 +15,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       background: linear-gradient(135deg, #4c1d95, #7e22ce, #db2777);
       background-size: 300% 300%;
       animation: gradientMove 10s ease infinite;
       font-family: 'Poppins', sans-serif;
       color: white;
+      text-align: center;
     }
 
     @keyframes gradientMove {
@@ -27,17 +30,11 @@
       100% { background-position: 0% 50%; }
     }
 
-    .container {
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
     h1 {
       font-size: 64px;
       font-weight: 800;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      margin-bottom: 40px;
+      text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+      margin-bottom: 30px;
       animation: fadeInUp 1.5s ease;
     }
 
@@ -46,8 +43,40 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .desc {
+      max-width: 600px;
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.95;
+      margin-bottom: 40px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .icons {
+      font-size: 48px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .icons i {
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .icons i:hover {
+      transform: scale(1.2);
+      color: #fbbf24;
+    }
+
     button {
-      font-size: 24px;
+      font-size: 22px;
       padding: 18px 50px;
       border: none;
       border-radius: 50px;
@@ -64,11 +93,19 @@
       box-shadow: 0 15px 40px rgba(255, 182, 193, 0.5);
     }
 
-    /* Floating blur circles */
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 16px;
+      opacity: 0.8;
+      animation: fadeIn 2s ease;
+    }
+
+    /* Floating background circles */
     .circle {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(90px);
       opacity: 0.3;
       animation: float 10s ease-in-out infinite alternate;
     }
@@ -95,24 +132,45 @@
       from { transform: translateY(0px); }
       to { transform: translateY(40px); }
     }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 42px; }
+      .desc { font-size: 16px; padding: 0 20px; }
+      button { font-size: 18px; padding: 14px 36px; }
+      .icons { font-size: 38px; gap: 20px; }
+    }
   </style>
 </head>
 <body>
   <div class="circle circle1"></div>
   <div class="circle circle2"></div>
 
-  <div class="container">
-    <h1>Sharik Reskin</h1>
-    <button onclick="window.location.href='https://funpay.com/lots/offer?id=54054894'">
-      Купить
-    </button>
+  <h1>Sharik Reskin</h1>
+
+  <div class="icons">
+    <i class="ri-gun-line"></i>
+    <i class="ri-fire-line"></i>
+    <i class="ri-star-smile-line"></i>
   </div>
 
+  <div class="desc">
+    Рескин имеет в себе красивую текстурку на оружия <b>Double Barrel Shotgun</b> и <b>SVD Dragunov</b>.<br>
+    Но <b>SVD</b> в подарок идёт с <b>MinMode</b> — мини-версией оружия 🎯
+  </div>
+
+  <button onclick="window.location.href='https://funpay.com/lots/offer?id=54054894'">
+    Купить
+  </button>
+
+  <div class="footer">💎 Платный до <b>15.10.2025</b></div>
+
   <script>
-    // Optional smooth entrance animation
     document.addEventListener("DOMContentLoaded", () => {
       document.body.style.opacity = "0";
-      setTimeout(() => { document.body.style.transition = "opacity 1.5s"; document.body.style.opacity = "1"; }, 100);
+      setTimeout(() => { 
+        document.body.style.transition = "opacity 1.5s"; 
+        document.body.style.opacity = "1"; 
+      }, 100);
     });
   </script>
 </body>
