@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Статистика Видео</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #1e3a8a, #9333ea, #ec4899);
+    background-size: 300% 300%;
+    animation: gradientMove 12s ease infinite;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .fade-in {
+    animation: fadeIn 1.2s ease forwards;
+    opacity: 0;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .count {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4ade80;
+  }
+  .comment-box {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="text-center fade-in">
+  <h1 class="text-4xl font-bold mb-6 drop-shadow-lg">📊 Статистика YouTube Видео</h1>
+  <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl shadow-2xl inline-block">
+    
+    <!-- Видео -->
+    <iframe class="rounded-xl mb-6 shadow-lg" width="560" height="315"
+      src="https://www.youtube.com/embed/okbUNBWcHfI"
+      title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+    <!-- Счётчики -->
+    <div class="grid grid-cols-3 gap-4 text-center mb-4">
+      <div>
+        <div class="text-sm">Просмотры</div>
+        <div id="views" class="count">Загрузка...</div>
+      </div>
+      <div>
+        <div class="text-sm">Лайки</div>
+        <div id="likes" class="count">Загрузка...</div>
+      </div>
+      <div>
+        <div class="text-sm">Комментарии</div>
+        <div id="comments" class="count">Загрузка...</div>
+      </div>
+    </div>
+
+    <!-- Список комментариев -->
+    <div class="text-left">
+      <h2 class="text-lg font-semibold mb-2">Список комментариев:</h2>
+      <div id="commentList" class="comment-box">Загрузка...</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const API_KEY = "AIzaSyACOJpEQ6r0jpAZ2W6ykrRUypg6TexzW2g"; // ← вставь свой ключ | if u are grab this api - idc. u are bad guys if u do it
+const VIDEO_ID = "okbUNBWcHfI";
+
+// Получаем статистику видео (просмотры, лайки, комментарии)
+async function fetchStats() {
+  try {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${VIDEO_ID}&key=${API_KEY}`);
+    const data = await res.json();
+    const stats = data.items?.[0]?.statistics;
+    if(stats){
+      document.getElementById("views").textContent = Number(stats.viewCount).toLocaleString("ru-RU");
+      document.getElementById("likes").textContent = Number(stats.likeCount).toLocaleString("ru-RU");
+      document.getElementById("comments").textContent = Number(stats.commentCount).toLocaleString("ru-RU");
+    } else {
+      document.getElementById("views").textContent = "Ошибка";
+    }
+  } catch(err){
+    console.error(err);
+    document.getElementById("views").textContent = "Ошибка";
+  }
+}
+
+// Получаем комментарии (только топовые, максимум 20)
+async function fetchComments() {
+  try {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${VIDEO_ID}&maxResults=20&key=${API_KEY}`);
+    const data = await res.json();
+    const list = document.getElementById("commentList");
+    list.innerHTML = "";
+    if(data.items){
+      data.items.forEach(item => {
+        const author = item.snippet.topLevelComment.snippet.authorDisplayName;
+        const text = item.snippet.topLevelComment.snippet.textDisplay;
+        const div = document.createElement("div");
+        div.innerHTML = `<strong>${author}:</strong> ${text}`;
+        div.classList.add("mb-2");
+        list.appendChild(div);
+      });
+    } else {
+      list.textContent = "Комментарии не найдены";
+    }
+  } catch(err){
+    console.error(err);
+    document.getElementById("commentList").textContent = "Ошибка загрузки комментариев";
+  }
+}
+
+// Запускаем функции и обновляем каждые 30 секунд
+fetchStats();
+fetchComments();
+setInterval(() => { fetchStats(); fetchComments(); }, 30000);
+</script>
+</body>
+</html>
