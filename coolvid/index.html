@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Статистика YouTube Видео</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e3a8a, #9333ea, #ec4899);
+      background-size: 300% 300%;
+      animation: gradientMove 10s ease infinite;
+      min-height: 100vh;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .fade-in {
+      animation: fadeIn 1.2s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center text-white font-sans">
+
+  <div class="text-center fade-in">
+    <h1 class="text-4xl font-bold mb-4 drop-shadow-lg">📊 Статистика видео YouTube</h1>
+    <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl inline-block">
+      <iframe
+        class="rounded-xl mb-4 shadow-lg"
+        width="560" height="315"
+        src="https://www.youtube.com/embed/okbUNBWcHfI"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+      <p id="views" class="text-3xl font-semibold mt-2">Загрузка...</p>
+      <p class="text-sm opacity-75 mt-1">Данные обновляются каждые 30 секунд</p>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = "AIzaSyACOJpEQ6r0jpAZ2W6ykrRUypg6TexzW2g"; // ← вставь сюда свой API-ключ | idc if u grab this api
+    const VIDEO_ID = "okbUNBWcHfI";
+
+    async function fetchViews() {
+      try {
+        const res = await fetch(
+          `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${VIDEO_ID}&key=${API_KEY}`
+        );
+        const data = await res.json();
+        const views = data.items?.[0]?.statistics?.viewCount;
+        const elem = document.getElementById("views");
+        if (views) {
+          elem.textContent = Number(views).toLocaleString("ru-RU") + " просмотров";
+        } else {
+          elem.textContent = "Не удалось получить данные 😢";
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById("views").textContent = "Ошибка соединения";
+      }
+    }
+
+    fetchViews();
+    setInterval(fetchViews, 30000);
+  </script>
+</body>
+</html>
